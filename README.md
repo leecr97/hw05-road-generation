@@ -10,7 +10,7 @@ Email: leecr@seas.upenn.edu
 ![](introimage.png)
 
 ## Live Project Demo
-[Link](https://leecr97.github.io/Environment-Setpiece/)
+[Link](https://leecr97.github.io/road-generation/)
 
 ##Project Description
 This project is a procedural 2D city map generator. It uses shape grammars and a modified version of L-systems, as well as instanced rendering to draw road networks.
