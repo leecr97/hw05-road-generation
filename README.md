@@ -5,7 +5,7 @@ PennKey: leecr
 
 Email: leecr@seas.upenn.edu
 
-[Website](www.crystaljlee.com)
+[Website](crystaljlee.com)
 
 ![](introimage.png)
 
