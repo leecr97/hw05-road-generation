@@ -12,7 +12,7 @@ Email: leecr@seas.upenn.edu
 ## Live Project Demo
 [Link](https://leecr97.github.io/road-generation/)
 
-##Project Description
+## Project Description
 This project is a procedural 2D city map generator. It uses shape grammars and a modified version of L-systems, as well as instanced rendering to draw road networks.
 
 The roads are drawn on top of several static textures, all of which represent different information about our city. These include a terrain representing terrain elevation, one representing land regions versus water regions, and one representing the population density in each area of the city. This information is all used to draw our roads.
