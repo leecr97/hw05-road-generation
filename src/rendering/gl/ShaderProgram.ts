@@ -27,6 +27,11 @@ class ShaderProgram {
   attrTranslate: number; // Used in the vertex shader during instanced rendering to offset the vertex positions to the particle's drawn position.
   attrUV: number;
 
+  attrTrans1: number;
+  attrTrans2: number;
+  attrTrans3: number;
+  attrTrans4: number;
+
   unifModel: WebGLUniformLocation;
   unifModelInvTr: WebGLUniformLocation;
   unifViewProj: WebGLUniformLocation;
@@ -36,6 +41,7 @@ class ShaderProgram {
   unifEye: WebGLUniformLocation;
   unifUp: WebGLUniformLocation;
   unifDimensions: WebGLUniformLocation;
+  unifMap: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -53,6 +59,12 @@ class ShaderProgram {
     this.attrCol = gl.getAttribLocation(this.prog, "vs_Col");
     this.attrTranslate = gl.getAttribLocation(this.prog, "vs_Translate");
     this.attrUV = gl.getAttribLocation(this.prog, "vs_UV");
+
+    this.attrTrans1 = gl.getAttribLocation(this.prog, "vs_Transform1");
+    this.attrTrans2 = gl.getAttribLocation(this.prog, "vs_Transform2");
+    this.attrTrans3 = gl.getAttribLocation(this.prog, "vs_Transform3");
+    this.attrTrans4 = gl.getAttribLocation(this.prog, "vs_Transform4");
+
     this.unifModel      = gl.getUniformLocation(this.prog, "u_Model");
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
@@ -61,6 +73,8 @@ class ShaderProgram {
     this.unifEye   = gl.getUniformLocation(this.prog, "u_Eye");
     this.unifRef   = gl.getUniformLocation(this.prog, "u_Ref");
     this.unifUp   = gl.getUniformLocation(this.prog, "u_Up");
+
+    this.unifMap = gl.getUniformLocation(this.prog, "u_Map");
   }
 
   use() {
@@ -125,6 +139,13 @@ class ShaderProgram {
     }
   }
 
+  setMap(m: number) {
+    this.use();
+    if (this.unifMap !== -1) {
+      gl.uniform1f(this.unifMap, m);
+    }
+  }
+
   draw(d: Drawable) {
     this.use();
 
@@ -159,6 +180,26 @@ class ShaderProgram {
     }
 
     // TODO: Set up attribute data for additional instanced rendering data as needed
+    if (this.attrTrans1 != -1 && d.bindTransform1()) {
+      gl.enableVertexAttribArray(this.attrTrans1);
+      gl.vertexAttribPointer(this.attrTrans1, 4, gl.FLOAT, false, 0, 0);
+      gl.vertexAttribDivisor(this.attrTrans1, 1);
+    }
+    if (this.attrTrans2 != -1 && d.bindTransform2()) {
+      gl.enableVertexAttribArray(this.attrTrans2);
+      gl.vertexAttribPointer(this.attrTrans2, 4, gl.FLOAT, false, 0, 0);
+      gl.vertexAttribDivisor(this.attrTrans2, 1);
+    }
+    if (this.attrTrans3 != -1 && d.bindTransform3()) {
+      gl.enableVertexAttribArray(this.attrTrans3);
+      gl.vertexAttribPointer(this.attrTrans3, 4, gl.FLOAT, false, 0, 0);
+      gl.vertexAttribDivisor(this.attrTrans3, 1);
+    }
+    if (this.attrTrans4 != -1 && d.bindTransform4()) {
+      gl.enableVertexAttribArray(this.attrTrans4);
+      gl.vertexAttribPointer(this.attrTrans4, 4, gl.FLOAT, false, 0, 0);
+      gl.vertexAttribDivisor(this.attrTrans4, 1);
+    }
 
     d.bindIdx();
     // drawElementsInstanced uses the vertexAttribDivisor for each "in" variable to
@@ -179,6 +220,11 @@ class ShaderProgram {
     if (this.attrCol != -1) gl.disableVertexAttribArray(this.attrCol);
     if (this.attrTranslate != -1) gl.disableVertexAttribArray(this.attrTranslate);
     if (this.attrUV != -1) gl.disableVertexAttribArray(this.attrUV);
+
+    if (this.attrTrans1 != -1) gl.disableVertexAttribArray(this.attrTrans1);
+    if (this.attrTrans2 != -1) gl.disableVertexAttribArray(this.attrTrans2);
+    if (this.attrTrans3 != -1) gl.disableVertexAttribArray(this.attrTrans3);
+    if (this.attrTrans4 != -1) gl.disableVertexAttribArray(this.attrTrans4);
   }
 };
 
